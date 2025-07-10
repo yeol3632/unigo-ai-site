@@ -13,7 +13,7 @@ export default function Hero() {
 				<div className="relative px-4 sm:px-6 lg:px-8 2xl:pl-[63px] lg:pt-0 flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-10">
 					<div className="text-center lg:text-left relative z-10 w-full lg:w-1/2 max-w-[620px]">
 						<h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-[55px] font-bold text-black leading-tight mb-6">
-							대치동 입시연구소 토마토의 <br />30년의 노하우를 학습한 AI
+							대치동 입시연구소 토마토의 <br />30년의 노하우와 결합된 AI
 						</h1>
 
 						<p className="xl:text-lg text-black mb-8 md:mb-12 mx-auto lg:mx-0 leading-relaxed max-w-[517px]">
