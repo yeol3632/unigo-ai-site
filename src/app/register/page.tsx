@@ -62,29 +62,22 @@ export default function RegisterPage() {
     <main className="min-h-screen bg-white flex flex-col items-center py-10">
       <div className="w-full max-w-2xl px-4">
         {/* Step Indicator */}
-        <div className="relative flex justify-center items-center mb-8">
-          {/* 회색선: 1→2 */}
-          <div
-            className="absolute top-1/2 transform -translate-y-1/2 h-1 bg-gray-300"
-            style={{ width: '8rem', left: '1.5rem' }}
-          />
-          {/* 그라데이션선: 2→3 */}
-          <div
-            className="absolute top-1/2 transform -translate-y-1/2 h-1 bg-gradient-to-r from-[#003478] to-white"
-            style={{ width: '8rem', left: 'calc(1.5rem + 8rem)' }}
-          />
-          <div className="flex space-x-20">
-            {[1, 2, 3].map((step) => (
-              <div
-                key={step}
-                className={`flex items-center justify-center w-12 h-12 rounded-lg border text-xl font-bold ` +
-                  (step === 3
-                    ? 'bg-[#003478] text-white'
-                    : 'border-black text-black bg-white')}
-              >
-                {step}
-              </div>
-            ))}
+        <div className="flex justify-center items-center mb-8">
+          {/* Circle 1 */}
+          <div className="flex items-center justify-center w-12 h-12 rounded-lg border text-xl font-bold bg-white text-black">
+            1
+          </div>
+          {/* Line 1: 1→2 */}
+          <div className="h-1 w-32 bg-gray-300"></div>
+          {/* Circle 2 */}
+          <div className="flex items-center justify-center w-12 h-12 rounded-lg border text-xl font-bold bg-white text-black">
+            2
+          </div>
+          {/* Line 2: 2→3 */}
+          <div className="h-1 w-32 bg-gradient-to-r from-[#003478] to-white"></div>
+          {/* Circle 3 */}
+          <div className="flex items-center justify-center w-12 h-12 rounded-lg border text-xl font-bold bg-[#003478] text-white">
+            3
           </div>
         </div>
         <h2 className="text-center text-2xl font-bold mb-6">회원 정보를 입력해 주세요.</h2>
