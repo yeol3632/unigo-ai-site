@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link"; 
 
 const Footer = () => {
   const imagesLinks = {
@@ -37,18 +38,23 @@ const Footer = () => {
         (점심시간 12:00 – 13:00)
       </p>
     </div>
+
+<div className="mt-6 flex flex-wrap items-center justify-start gap-4 text-sm text-gray-400">
+  <Link href="/privacy-policy" className="hover:underline text-blue-300">
+    개인정보 처리방침
+  </Link>
+  <span className="mx-2 text-gray-500">|</span>
+  <Link href="/terms-of-service" className="hover:underline text-blue-300">
+    서비스 이용약관
+  </Link>
+</div>
+
+
     <p className="mt-7 md:text-[16px] text-[14px] ">
   © 2025 유니고 AI, Inc. All rights reserved.
 </p>
 
-  <p className="mt-3 text-[14px] text-blue-300 underline">
-    <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">
-      개인정보 처리방침 보기
-    </a>
-    
-  </p><p className="mt-3 text-[14px] text-blue-300 underline">
-  <a href="/terms-of-service" className="underline">서비스 이용약관</a>
-</p>
+
   </div>
 </footer>
 
