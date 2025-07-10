@@ -102,7 +102,7 @@ export default function PrivacyPolicyPage() {
 
         <div>
           <h2 className="text-xl font-semibold mb-2">12. 의견수렴 및 불만처리</h2>
-          <p>담당부서: 공식 이메일(official@vibeon.ai), 전화(02-565-5600)</p>
+          <p>담당부서: 공식 이메일(kieps@naver.com), 전화(02-565-5600)</p>
           <p>외부기관: 개인정보침해신고센터(118), 분쟁조정위원회 등</p>
         </div>
 
