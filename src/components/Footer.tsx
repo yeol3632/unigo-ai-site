@@ -45,10 +45,10 @@ const Footer = () => {
     <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">
       개인정보 처리방침 보기
     </a>
-    <a href="/terms-of-service" className="underline">서비스 이용약관</a>
-  </p>
-
-
+    
+  </p><p className="mt-3 text-[14px] text-blue-300 underline">
+  <a href="/terms-of-service" className="underline">서비스 이용약관</a>
+</p>
   </div>
 </footer>
 
