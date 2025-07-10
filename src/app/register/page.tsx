@@ -63,16 +63,21 @@ export default function RegisterPage() {
       <div className="w-full max-w-2xl px-4">
         {/* Step Indicator */}
         <div className="relative flex justify-center items-center mb-8">
-          <div className="absolute top-1/2 transform -translate-y-1/2 h-1 w-1/3 bg-gray-300"></div>
-          <div className="absolute top-1/2 transform -translate-y-1/2 h-1 w-1/3 bg-gradient-to-l from-[#003478] to-white left-1/3"></div>
+          {/* Gray line between 1 and 2 */}
+          <div className="absolute top-1/2 transform -translate-y-1/2 h-1 w-24 bg-gray-300"></div>
+          {/* Gradient line between 2 and 3 */}
+          <div className="absolute top-1/2 transform -translate-y-1/2 h-1 w-24 bg-gradient-to-r from-[#003478] to-white left-1/2"></div>
           <div className="flex space-x-20">
-            {[1,2,3].map((step) => (
-              <div key={step} className={
-                `flex items-center justify-center w-12 h-12 rounded-lg border text-xl font-bold ` +
-                (step < 3
-                  ? 'border-black text-black bg-white'
-                  : 'bg-[#003478] text-white')
-              }>{step}</div>
+            {[1, 2, 3].map((step) => (
+              <div
+                key={step}
+                className={`flex items-center justify-center w-12 h-12 rounded-lg border text-xl font-bold ` +
+                  (step === 3
+                    ? 'bg-[#003478] text-white'
+                    : 'border-black text-black bg-white')}
+              >
+                {step}
+              </div>
             ))}
           </div>
         </div>
