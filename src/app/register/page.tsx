@@ -63,10 +63,16 @@ export default function RegisterPage() {
       <div className="w-full max-w-2xl px-4">
         {/* Step Indicator */}
         <div className="relative flex justify-center items-center mb-8">
-          {/* Gray line between 1 and 2 */}
-          <div className="absolute top-1/2 transform -translate-y-1/2 h-1 w-24 bg-gray-300"></div>
-          {/* Gradient line between 2 and 3 */}
-          <div className="absolute top-1/2 transform -translate-y-1/2 h-1 w-24 bg-gradient-to-r from-[#003478] to-white left-1/2"></div>
+          {/* 회색선: 1→2 */}
+          <div
+            className="absolute top-1/2 transform -translate-y-1/2 h-1 bg-gray-300"
+            style={{ width: '8rem', left: '1.5rem' }}
+          />
+          {/* 그라데이션선: 2→3 */}
+          <div
+            className="absolute top-1/2 transform -translate-y-1/2 h-1 bg-gradient-to-r from-[#003478] to-white"
+            style={{ width: '8rem', left: 'calc(1.5rem + 8rem)' }}
+          />
           <div className="flex space-x-20">
             {[1, 2, 3].map((step) => (
               <div
