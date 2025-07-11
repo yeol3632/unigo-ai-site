@@ -16,7 +16,7 @@ export const Navbar = () => {
 		{ label: "유니고 진단이란?", href: "/ai-intro" },
 		{ label: "유니고AI 분석", href: "/ai-analysis", hasDropdown: true },
 		/*{ label: "무료 분석", href: "/free-analysis" },*/
-		
+		{ label: "유니고 입시TV", href: "/you-tube" },
 		{ label: "입시 커뮤니티", href: "/community" },
 		{ label: "고객센터", href: "/support" },
 	];
