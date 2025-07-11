@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default async function YouTubePage() {
   const apiKey = process.env.YOUTUBE_API_KEY!;
   const channelId = process.env.YOUTUBE_CHANNEL_ID!;
-  x
+
   // 1) 플레이리스트 가져오기
   const plRes = await fetch(
     `https://www.googleapis.com/youtube/v3/playlists?` +
