@@ -13,6 +13,7 @@ type VideoItem = {
   };
 };
 
+
 interface YouTubeGridClientProps {
   initialItems: VideoItem[];
 }
