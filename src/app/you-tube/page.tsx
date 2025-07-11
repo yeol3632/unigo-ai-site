@@ -42,7 +42,7 @@ export default async function YouTubePage() {
   return (
     <main className="max-w-6xl mx-auto px-4 py-12">
       <h1 className="text-3xl font-bold mb-8">유니고TV 영상</h1>
-      <div className="rounded-lg overflow-hidden shadow transition-transform duration-200 hover:scale-105 hover:shadow-lg">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {items.map((item) => (
           <Link key={item.id.videoId} href={`https://www.youtube.com/watch?v=${item.id.videoId}`} target="_blank">
             <div className="rounded-lg overflow-hidden shadow hover:shadow-lg transition">
