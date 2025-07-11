@@ -1,4 +1,4 @@
-// src/app/you-tube/YouTubeGridClient.tsx
+// File: src/app/you-tube/YouTubeGridClient.tsx
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -13,7 +13,6 @@ type VideoItem = {
   };
 };
 
-
 interface YouTubeGridClientProps {
   initialItems: VideoItem[];
 }
@@ -21,18 +20,13 @@ interface YouTubeGridClientProps {
 export default function YouTubeGridClient({ initialItems }: YouTubeGridClientProps) {
   const [selected, setSelected] = useState<string>('전체');
   const [videos, setVideos] = useState<VideoItem[]>(initialItems);
-  const apiKey = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY!;
+  const apiKey = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
 
+  
   const categories = [
-    { id: '전체', title: '전체' },
-    {
-      id: 'PLs14ujgw-QQPNWh4IN28gA8T3pzzjpM6d', 
-      title: '입시정보 전달',
-    },
-    {
-      id: 'PLs14ujgw-QQPTjAObwq4v6GYVuNNQfOhu',
-      title: '생기부를 부탁해',
-    },
+    { id: '전체',      label: '전체' },
+    { id: 'PLs14ujgw-QQPNWh4IN28gA8T3pzzjpM6d', label: '입시정보 전달' },
+    { id: 'PLs14ujgw-QQPTjAObwq4v6GYVuNNQfOhu', label: '생기부를 부탁해' },
   ];
 
   useEffect(() => {
@@ -41,28 +35,28 @@ export default function YouTubeGridClient({ initialItems }: YouTubeGridClientPro
       return;
     }
 
-  
     const fetchPlaylistVideos = async () => {
       try {
         const res = await fetch(
           `https://www.googleapis.com/youtube/v3/playlistItems?` +
-            `key=${apiKey}` +
-            `&playlistId=${selected}` +
-            `&part=snippet&maxResults=50`,
-          { cache: 'no-store' }
+          `key=${apiKey}` +
+          `&playlistId=${selected}` +
+          `&part=snippet&maxResults=50`
         );
         if (!res.ok) throw new Error('PlaylistItems 호출 실패');
         const data = await res.json();
-        const items: VideoItem[] = (data.items as any[]).map(item => ({
-          id: { videoId: item.snippet.resourceId.videoId },
-          snippet: {
-            title: item.snippet.title,
-            thumbnails: { high: { url: item.snippet.thumbnails.high.url } },
-          },
-        }));
+        const items = (data.items as any[])
+          .filter(i => i.snippet.resourceId?.videoId)
+          .map(i => ({
+            id: { videoId: i.snippet.resourceId.videoId },
+            snippet: {
+              title: i.snippet.title,
+              thumbnails: { high: { url: i.snippet.thumbnails.high.url } },
+            },
+          }));
         setVideos(items);
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
+        console.error(err);
         setVideos([]);
       }
     };
@@ -72,22 +66,22 @@ export default function YouTubeGridClient({ initialItems }: YouTubeGridClientPro
 
   return (
     <>
+      {/* 고정 카테고리 버튼 */}
       <div className="flex flex-wrap gap-2 mb-6">
         {categories.map(cat => (
           <button
             key={cat.id}
             className={`px-4 py-2 rounded ${
-              selected === cat.id
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-200 text-gray-700'
+              selected === cat.id ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'
             }`}
             onClick={() => setSelected(cat.id)}
           >
-            {cat.title}
+            {cat.label}
           </button>
         ))}
       </div>
 
+      {/* 비디오 그리드 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {videos.map(item => (
           <Link
@@ -103,9 +97,7 @@ export default function YouTubeGridClient({ initialItems }: YouTubeGridClientPro
                 alt={item.snippet.title}
                 className="w-full object-cover"
               />
-              <p className="mt-2 text-sm font-medium leading-snug">
-                {item.snippet.title}
-              </p>
+              <p className="mt-2 text-sm font-medium leading-snug">{item.snippet.title}</p>
             </div>
           </Link>
         ))}
