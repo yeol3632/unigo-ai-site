@@ -1,13 +1,10 @@
+// src/app/you-tube/YouTubeGridClient.tsx
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-type Playlist = {
-  id: string;
-  snippet: { title: string };
-};
 type VideoItem = {
   id: { videoId: string };
   snippet: {
@@ -17,25 +14,33 @@ type VideoItem = {
 };
 
 interface YouTubeGridClientProps {
-  playlists: Playlist[];
   initialItems: VideoItem[];
 }
 
-export default function YouTubeGridClient({ playlists, initialItems }: YouTubeGridClientProps) {
+export default function YouTubeGridClient({ initialItems }: YouTubeGridClientProps) {
   const [selected, setSelected] = useState<string>('전체');
   const [videos, setVideos] = useState<VideoItem[]>(initialItems);
-  const apiKey = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY!;
+
+  const categories = [
+    { id: '전체', title: '전체' },
+    {
+      id: 'PLs14ujgw-QQPNWh4IN28gA8T3pzzjpM6d', 
+      title: '입시정보 전달',
+    },
+    {
+      id: 'PLs14ujgw-QQPTjAObwq4v6GYVuNNQfOhu',
+      title: '생기부를 부탁해',
+    },
+  ];
 
   useEffect(() => {
-    if (!apiKey) return;
-
     if (selected === '전체') {
-      // 전체는 초기 채널 업로드 목록 그대로
       setVideos(initialItems);
       return;
     }
 
-    // 선택된 플레이리스트 ID로 영상 가져오기
+  
     const fetchPlaylistVideos = async () => {
       try {
         const res = await fetch(
@@ -47,8 +52,7 @@ export default function YouTubeGridClient({ playlists, initialItems }: YouTubeGr
         );
         if (!res.ok) throw new Error('PlaylistItems 호출 실패');
         const data = await res.json();
-        // 실제 videoId로 매핑
-        const items = (data.items as any[]).map(item => ({
+        const items: VideoItem[] = (data.items as any[]).map(item => ({
           id: { videoId: item.snippet.resourceId.videoId },
           snippet: {
             title: item.snippet.title,
@@ -67,30 +71,22 @@ export default function YouTubeGridClient({ playlists, initialItems }: YouTubeGr
 
   return (
     <>
-      {/* 카테고리(플레이리스트) 버튼 */}
       <div className="flex flex-wrap gap-2 mb-6">
-        <button
-          className={`px-4 py-2 rounded ${
-            selected === '전체' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'
-          }`}
-          onClick={() => setSelected('전체')}
-        >
-          전체
-        </button>
-        {playlists.map(pl => (
+        {categories.map(cat => (
           <button
-            key={pl.id}
+            key={cat.id}
             className={`px-4 py-2 rounded ${
-              selected === pl.id ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'
+              selected === cat.id
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-700'
             }`}
-            onClick={() => setSelected(pl.id)}
+            onClick={() => setSelected(cat.id)}
           >
-            {pl.snippet.title}
+            {cat.title}
           </button>
         ))}
       </div>
 
-      {/* 영상 그리드 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {videos.map(item => (
           <Link
@@ -106,7 +102,9 @@ export default function YouTubeGridClient({ playlists, initialItems }: YouTubeGr
                 alt={item.snippet.title}
                 className="w-full object-cover"
               />
-              <p className="mt-2 text-sm font-medium leading-snug">{item.snippet.title}</p>
+              <p className="mt-2 text-sm font-medium leading-snug">
+                {item.snippet.title}
+              </p>
             </div>
           </Link>
         ))}
