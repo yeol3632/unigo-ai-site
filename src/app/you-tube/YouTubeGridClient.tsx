@@ -26,7 +26,8 @@ export default function YouTubeGridClient({ initialItems }: YouTubeGridClientPro
   const categories = [
     { id: '전체',      label: '전체' },
     { id: 'PLs14ujgw-QQPNWh4IN28gA8T3pzzjpM6d', label: '입시정보 전달' },
-    { id: 'PLs14ujgw-QQPTjAObwq4v6GYVuNNQfOhu', label: '생기부를 부탁해' },
+    { id: 'PLs14ujgw-QQPTjAObwq4v6GYVuNNQfOhu', label: '생기부를 부탁해[생기부 평가단]' },
+    { id: 'PLs14ujgw-QQPynsauIzb6nGZXLJ_8nczQ', label: '전일권 대표' },
   ];
 
   useEffect(() => {
@@ -105,3 +106,4 @@ export default function YouTubeGridClient({ initialItems }: YouTubeGridClientPro
     </>
   );
 }
+
