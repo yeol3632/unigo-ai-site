@@ -1,53 +1,61 @@
 // /src/app/you-tube/page.tsx
-import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { Metadata } from 'next';
 
-interface Video {
+export const metadata: Metadata = {
+  title: '유니고TV 영상',
+};
+
+interface YouTubeItem {
   id: { videoId: string };
   snippet: {
     title: string;
-    thumbnails: { medium: { url: string } };
+    thumbnails: {
+      high: { url: string };
+    };
   };
 }
 
-export const revalidate = 60; // ISR: 60초마다 재빌드
-
 export default async function YouTubePage() {
-  const apiKey = process.env.YOUTUBE_API_KEY!;
-  const channelId = 'UCEb4bMByADeC5y0KWFtkaCw'; 
-  const maxResults = 8;
+  const apiKey = process.env.YOUTUBE_API_KEY;
+  const channelId = process.env.YOUTUBE_CHANNEL_ID; // Vercel 환경변수에 설정해두세요
+  const maxResults = 200;
 
-  // YouTube Data API v3: Search endpoint
-  const url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}` +
-              `&channelId=${channelId}&part=snippet,id&order=date&maxResults=${maxResults}`;
+  const res = await fetch(
+    `https://www.googleapis.com/youtube/v3/search`
+    + `?key=${apiKey}`
+    + `&channelId=${channelId}`
+    + `&part=snippet`
+    + `&order=date`
+    + `&maxResults=${maxResults}`,
+    { next: { revalidate: 60 * 10 } } // 10분마다 캐시 갱신
+  );
 
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('YouTube API fetch failed');
-  const json = await res.json();
-  const videos: Video[] = json.items;
+  if (!res.ok) {
+    throw new Error('YouTube API 호출에 실패했습니다');
+  }
+
+  const data = await res.json();
+  const items: YouTubeItem[] = data.items.filter((i: any) => i.id.videoId);
 
   return (
-    <main className="max-w-4xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-6">유니고TV 영상</h1>
+    <main className="max-w-6xl mx-auto px-4 py-12">
+      <h1 className="text-3xl font-bold mb-8">유니고TV 영상</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {videos.map((v) => (
-          <a
-            key={v.id.videoId}
-            href={`https://www.youtube.com/watch?v=${v.id.videoId}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block overflow-hidden rounded-lg shadow hover:shadow-lg transition"
-          >
-            <div className="relative w-full h-0 pb-[56.25%]">
+        {items.map((item) => (
+          <Link key={item.id.videoId} href={`https://www.youtube.com/watch?v=${item.id.videoId}`} target="_blank">
+            <div className="rounded-lg overflow-hidden shadow hover:shadow-lg transition">
               <Image
-                src={v.snippet.thumbnails.medium.url}
-                alt={v.snippet.title}
-                fill
-                className="object-cover"
+                src={item.snippet.thumbnails.high.url}
+                width={320}
+                height={180}
+                alt={item.snippet.title}
+                className="w-full object-cover"
               />
+              <p className="mt-2 text-sm font-medium leading-snug">{item.snippet.title}</p>
             </div>
-            <p className="mt-2 text-sm font-medium">{v.snippet.title}</p>
-          </a>
+          </Link>
         ))}
       </div>
     </main>
