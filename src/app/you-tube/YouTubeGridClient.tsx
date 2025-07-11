@@ -4,7 +4,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 type VideoItem = {
   id: { videoId: string };
@@ -137,7 +136,7 @@ export default function YouTubeGridClient({ initialItems }: { initialItems: Vide
                   <p className="mt-1 text-xs text-gray-500">
                     조회수 {Number(item.snippet.viewCount).toLocaleString()}회{' '}
                     {item.snippet.likeCount && `· 좋아요 ${Number(item.snippet.likeCount).toLocaleString()}개`} ·{' '}
-                    {formatDistanceToNow(new Date(item.snippet.publishedAt!), { addSuffix: true })}
+                    {new Date(item.snippet.publishedAt!).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
                   </p>
                 )}
               </div>
